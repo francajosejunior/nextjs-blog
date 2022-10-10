@@ -1,11 +1,16 @@
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Date from "../components/date";
 import Layout, { siteTitle } from "../components/layout";
-import { getSortedPostsData } from "../lib/posts";
+import { FileResult, getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 
-export default function Home({ allPostsData }) {
+interface HomePropos {
+  allPostsData: FileResult[];
+}
+
+export default function Home({ allPostsData }: HomePropos) {
   return (
     <Layout home>
       <Head>
@@ -38,11 +43,11 @@ export default function Home({ allPostsData }) {
   );
 }
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData: FileResult[] = getSortedPostsData();
   return {
     props: {
       allPostsData,
     },
   };
-}
+};
